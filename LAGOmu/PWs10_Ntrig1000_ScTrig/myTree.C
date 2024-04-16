@@ -4,6 +4,28 @@
 #include "TNtuple.h"
 #include <memory> //Esto esá sugerido por chat GPT ---------------
 
+
+//Readme
+/*
+Convierte las tuplas PW--_LAGOmu.root en estructura de arbol(Tree)
+
+Ejecutar en root
+
+root[0] .L myTree.C
+root[1] tree()
+
+Se obtiene myTree.root
+
+Para llamar el archivo se usa
+
+TFile::Open("myTree.root")
+
+
+
+
+*/
+
+
 void tree() {
 
 //Utilizar punteros inteligentes para gestionar la memoria del equipo
@@ -41,8 +63,8 @@ void tree() {
             drs4data->GetEntry(j + i * 1024);
             tt[j] = t;
             vv0[j] = v0;
-            vv0[j] = v1;
-            vv0[j] = v2;
+            vv1[j] = v1;
+            vv2[j] = v2;
         }
         myTree.Fill();
     }

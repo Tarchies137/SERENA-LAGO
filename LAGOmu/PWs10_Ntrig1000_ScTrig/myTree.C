@@ -2,51 +2,36 @@
 #include "TFile.h"
 #include "TTree.h"
 #include "TNtuple.h"
-#include <memory> //Esto esá sugerido por chat GPT ---------------
+#include <memory> //Este include fue sugerido por ChatGPT
+#include <iostream>
+#include <sstream>
 
+void tree(int fileNumber) {
+    // Construir el nombre del archivo de entrada
+    std::string inputFileName = "PW" + std::to_string(fileNumber) + "_LAGOmu.root";
 
-//Readme
-/*
-Convierte las tuplas PW--_LAGOmu.root en estructura de arbol(Tree)
+    // Abrir el archivo de entrada
+    std::unique_ptr<TFile> inputFile(TFile::Open(inputFileName.c_str()));
 
-Ejecutar en root
+    // Construir el nombre del archivo de salida
+    std::size_t found = inputFileName.find_last_of("/\\");
+    std::string outputFileName = inputFileName.substr(found + 1); // obtener solo el nombre del archivo sin la ruta
+    outputFileName = outputFileName.substr(0, outputFileName.find_last_of(".")); // eliminar la extensión
+    outputFileName += "_Tree.root";
 
-root[0] .L myTree.C
-root[1] tree()
+    // Crear el archivo de salida
+    std::unique_ptr<TFile> outputFile(new TFile(outputFileName.c_str(), "recreate"));
 
-Se obtiene myTree.root
+    // Obtener el TNtuple del archivo de entrada
+    TNtuple *drs4data = (TNtuple*)inputFile->Get("drs4data");
 
-Para llamar el archivo se usa
-
-TFile::Open("myTree.root")
-
-
-
-
-*/
-
-
-void tree() {
-
-//Utilizar punteros inteligentes para gestionar la memoria del equipo
-    // Crear el archivo ROOT
-   
-
-    // Abrir el archivo de datos
-    std::unique_ptr<TFile> _file0(TFile::Open("PW0_LAGOmu.root"));
-     std::unique_ptr<TFile> f(new TFile("myTree.root", "recreate"));
-//--------------------------------------------------------------     
-/*  //Se cambia por punteros inteligentes
-   TFile *f = new TFile("myTree.root","recreate");
-   TFile *_file0 = TFile::Open("PW0_LAGOmu.root");
-  */
-    TNtuple *drs4data = (TNtuple*)_file0->Get("drs4data");
+    // Crear el TTree de salida
     TTree myTree("myTree", "Conversión de Tupla a Tree");
 
-    Float_t tt[1024],t,vv0[1024], v0,vv1[1024], v1,vv2[1024], v2; 
+    Float_t tt[1024], t, vv0[1024], v0, vv1[1024], v1, vv2[1024], v2;
     Int_t ev;
-   
-    // Establecer la dirección de memoria de t,v0,v1 y v2
+
+    // Establecer las direcciones de memoria de las variables
     drs4data->SetBranchAddress("t", &t);
     drs4data->SetBranchAddress("v0", &v0);
     drs4data->SetBranchAddress("v1", &v1);
@@ -56,10 +41,11 @@ void tree() {
     myTree.Branch("vv0", vv0, "vv0[1024]/F");
     myTree.Branch("vv1", vv1, "vv1[1024]/F");
     myTree.Branch("vv2", vv2, "vv2[1024]/F");
+
     // Llenar el árbol
     for (Int_t i = 0; i < 1000; i++) {
         ev = i;
-       for (Int_t j = 0; j < 1024; j++) {
+        for (Int_t j = 0; j < 1024; j++) {
             drs4data->GetEntry(j + i * 1024);
             tt[j] = t;
             vv0[j] = v0;
@@ -69,14 +55,18 @@ void tree() {
         myTree.Fill();
     }
 
-    // Cerrar el archivo de datos
-    _file0->Close();
+    // Cerrar el archivo de entrada
+    inputFile->Close();
 
     // Guardar la cabecera del árbol
     myTree.Write();
 
-    // Cerrar el archivo ROOT
-    f->Close();
+    // Cerrar el archivo de salida
+    outputFile->Close();
 }
 
+// Ejemplo de uso:
+// tree(0) procesará el archivo PW0_LAGOmu.root y generará PW0_LAGOmu_Tree.root
+// tree(1) procesará el archivo PW1_LAGOmu.root y generará PW1_LAGOmu_Tree.root
+// Y así sucesivamente
 

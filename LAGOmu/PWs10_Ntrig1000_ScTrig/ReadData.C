@@ -56,10 +56,14 @@ void ReadData::Loop()
 		}
 		//carga total clectada
 	Float_t dt = (tt[kNsample-1]-tt[0])/(kNsample - 1);
-	Q[0] = (Float_t)sR0*dt/R;
+	/*Q[0] = (Float_t)sR0*dt/R;
 	Q[1] = (Float_t)sR1*dt/R;
-	Q[2] = (Float_t)sR2*dt/R;
-	
+	Q[2] = (Float_t)sR2*dt/R;*/
+
+	Q[0] = sR0*dt/R;
+	Q[1] = sR1*dt/R;
+	Q[2] = sR2*dt/R;
+
            
               myTree->Fill();
     }

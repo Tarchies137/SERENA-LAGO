@@ -30,7 +30,7 @@ public :
    // Declaration of leaf types
    
   static const Int_t kNsample=1024;
-  static const Int_t R=50; //Resistencia 50 [Ohm]
+   Float_t R=50; //Resistencia 50 [Ohm]
    Float_t         evn;
    Float_t         evn_time;
    Float_t         t;

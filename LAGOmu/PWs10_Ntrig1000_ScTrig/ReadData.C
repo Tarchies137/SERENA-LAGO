@@ -1,4 +1,4 @@
-#define ReadData_cxx
+ #define ReadData_cxx
 #include "ReadData.h"
 #include <TH2.h>
 #include <TStyle.h>
@@ -43,6 +43,8 @@ void ReadData::Loop()
       	ev = jentry;
       	//
       	Float_t sR0=0,sR1=0,sR2=0;
+	Float_t t0_min,v0_min=1000;//,t1_min,v1_min=1000,t2_min,v2_min=1000;
+
       	for (Int_t j = 0; j < kNsample; j++) {
         	nb = fChain->GetEntry(j + jentry*kNsample);   nbytes += nb;   
        		tt[j] = t;
@@ -53,6 +55,12 @@ void ReadData::Loop()
             	sR0 += v0;// equivale a sR = sR+vv[k];
             	sR1 += v1;
             	sR2 += v2;
+		if (v0<v0_min)
+		{
+			v0_min = v0;
+			t0_min = t;
+		}
+		
 		}
 		//carga total clectada
 	Float_t dt = (tt[kNsample-1]-tt[0])/(kNsample - 1);

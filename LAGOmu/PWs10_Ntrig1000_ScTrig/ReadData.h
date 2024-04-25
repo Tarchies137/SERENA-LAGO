@@ -29,35 +29,35 @@ public :
 
    // Declaration of leaf types
    
-  static const Int_t kNsample=1024;
-   Float_t R=50; //Resistencia 50 [Ohm]
-   Float_t         evn;
-   Float_t         evn_time;
-   Float_t         t;
-   Float_t         v0;
-   Float_t         v1;
-   Float_t         v2;
-   Float_t tt[kNsample], vv0[kNsample], vv1[kNsample], vv2[kNsample],Q[3];
+  static const Int_t kNsample=1024;	// Número de Saples del drs4
+   Float_t 	R=50; 			//Resistencia 50 [Ohm] de la impedancia.
+   Float_t   	evn;
+   Float_t   	evn_time;
+   Float_t   	t;
+   Float_t   	v0;
+   Float_t   	v1;
+   Float_t   	v2;
+   Float_t tt[kNsample], vv0[kNsample], vv1[kNsample], vv2[kNsample],Q[3];	//Branches
    Int_t ev;
    
-  std::string filename = "PW0_LAGOmu.root";
+  std::string filename  ;
  
 
 
    // List of branches
-   TBranch        *b_evn;   //!
-   TBranch        *b_evn_time;   //!
-   TBranch        *b_t;   //!
-   TBranch        *b_v0;   //!
-   TBranch        *b_v1;   //!
-   TBranch        *b_v2;   //!
+   TBranch        *b_evn;   	//!
+   TBranch        *b_evn_time; 	//!
+   TBranch        *b_t;   	//!
+   TBranch        *b_v0;   	//!
+   TBranch        *b_v1;   	//!
+   TBranch        *b_v2;   	//!
 
-    ReadData(const char* filename, TTree *tree=0);//ReadData(TTree *tree=0);
+    ReadData(const char* filename, TTree *tree=0);		//ReadData(TTree *tree=0);
    virtual ~ReadData();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
-   virtual void     Init(TTree *tree);
+   virtual void     Init(const char* filename, TTree *tree); 	//modificar parámetros de entrada INIT
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
@@ -77,7 +77,7 @@ ReadData::ReadData(const char* filename, TTree *tree) : fChain(0)
     }
     f->GetObject("drs4data",tree);
 
-    Init(tree);
+    Init(filename, tree);
 }
 
 
@@ -107,7 +107,7 @@ Long64_t ReadData::LoadTree(Long64_t entry)
    return centry;
 }
 
-void ReadData::Init(TTree *tree)
+void ReadData::Init(const char* filename, TTree *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
@@ -133,12 +133,12 @@ void ReadData::Init(TTree *tree)
    //   outputFile = new TFile("PW0.root","RECREATE"); 
    
    
-   std::string outputFileName = filename;  // Copia el nombre de archivo de entrada
-   std::size_t found = outputFileName.find_last_of("/\\."); // Busca la última ocurrencia de '/' o '\' para encontrar la extensión
-   if (found != std::string::npos) { // Si se encontró la extensión
-       outputFileName.insert(found, "_Tree"); // Inserta "_Tree" justo antes de la extensión
-     } else { // Si no se encontró la extensión
-       outputFileName += "_Tree"; // Agrega "_Tree" al final del nombre de archivo
+   std::string outputFileName = filename;  			// Copia el nombre de archivo de entrada
+   std::size_t found = outputFileName.find_last_of("/\\."); 	// Busca la última ocurrencia de '/' o '\' para encontrar la extensión
+   if (found != std::string::npos) { 				// Si se encontró la extensión
+       outputFileName.insert(found, "_Tree"); 			// Inserta "_Tree" justo antes de la extensión
+     } else { 							// Si no se encontró la extensión
+       outputFileName += "_Tree"; 				// Agrega "_Tree" al final del nombre de archivo
      }
 
 

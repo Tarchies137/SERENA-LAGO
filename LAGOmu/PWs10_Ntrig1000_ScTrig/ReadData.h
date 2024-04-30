@@ -37,7 +37,8 @@ public :
    Float_t   	v0;
    Float_t   	v1;
    Float_t   	v2;
-   Float_t tt[kNsample], vv0[kNsample], vv1[kNsample], vv2[kNsample],Q[3];	//Branches
+   Float_t tt[kNsample], vv0[kNsample], vv1[kNsample], vv2[kNsample]; //Branches
+   Float_t eVals[9], Q[3], V_Min[3], T_Min[3];	//Branches eVals junta todos los valores, modif myTree->Brance("evals ... *160
    Int_t ev;
    
   std::string filename  ;
@@ -156,7 +157,7 @@ void ReadData::Init(const char* filename, TTree *tree)
     myTree->Branch("vv0", vv0,TString("vv0[")+kNsample+"]/F");
     myTree->Branch("vv1", vv1,TString("vv1[")+kNsample+"]/F");
     myTree->Branch("vv2", vv2,TString("vv2[")+kNsample+"]/F");
-    myTree->Branch("Q", Q,"Q[3]/F");
+    myTree->Branch("eVals", eVals,"eVals[9]/F");
    Notify();
 }
 

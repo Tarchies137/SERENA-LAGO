@@ -43,7 +43,7 @@ void ReadData::Loop()
       	ev = jentry;
       	//
       	Float_t sR0=0,sR1=0,sR2=0;
-	Float_t t0_min,v0_min=1000;//,t1_min,v1_min=1000,t2_min,v2_min=1000;
+	Float_t t0_min,v0_min=1000,t1_min,v1_min=1000,t2_min,v2_min=1000;
 
       	for (Int_t j = 0; j < kNsample; j++) {
         	nb = fChain->GetEntry(j + jentry*kNsample);   nbytes += nb;   
@@ -55,10 +55,21 @@ void ReadData::Loop()
             	sR0 += v0;// equivale a sR = sR+vv[k];
             	sR1 += v1;
             	sR2 += v2;
+            	//Minimo ...  Incluir como nueva rama
 		if (v0<v0_min)
 		{
 			v0_min = v0;
 			t0_min = t;
+		}
+		if (v1<v1_min)
+		{
+			v1_min = v1;
+			t1_min = t;
+		}
+		if (v2<v2_min)
+		{
+			v2_min = v2;
+			t2_min = t;
 		}
 		
 		}
@@ -71,6 +82,23 @@ void ReadData::Loop()
 	Q[0] = sR0*dt/R;
 	Q[1] = sR1*dt/R;
 	Q[2] = sR2*dt/R;
+	V_Min[0] = v0_min;
+	V_Min[1] = v1_min;
+	V_Min[2] = v2_min;
+	T_Min[0] = t0_min;
+	T_Min[1] = t1_min;
+	T_Min[2] = t2_min;
+				
+	for (int i = 0; i <= 8; ++i) {
+		if (i < 3) {  			// Carga Almacenada por evento 
+		eVals[i] = Q[i];
+		} else if (i >= 3 && i < 6) {	// Voltaje minimo por evento
+		eVals[i] = V_Min[i-3];
+		} else {    			// Tiempo asciado al Voltaje minimo por evento
+		eVals[i] = T_Min[i-6] ;
+		}
+	}
+
 
            
               myTree->Fill();

@@ -17,7 +17,7 @@ Este repositorio no comparte los archivos .root debido a su tamaño
 --------------------------------------------------------------
 
 29/04/24
-
+ Se estabelecen los objetivos semanales
 Objetivos de la Semana:
 
 (*) Repasar Cesión de Exploración medidas Carga Eléctrica
@@ -36,4 +36,7 @@ Objetivos de la Semana:
 (*) Encontrar los mínimos y sus respectivos tiempos  
 ( ) Crear Srcitps con todos los graficos solicitados
 ( ) Encontrar los Picks, buscar en ROOTCERN Picks.C ejemplo de implementación
-
+----------------------------------------------------------
+10/05/2024 
+Se crea nueva rama de git $git checkout FOREST  para trabajar union de árboles 
+Continuamos trabajando data

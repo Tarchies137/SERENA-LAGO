@@ -35,26 +35,15 @@ do
 	else
 #El codigo aplicado en root debe ir sin iodentación
 root -l<<EOF
-.L ReadData.C
-ReadData *reader = new ReadData("$archivo");
+.L ReadDataGlobal.C
+ReadDataGlobal *reader = new ReadDataGlobal("$archivo");
 reader->Loop();
 .ls;
 EOF
 fi
+
 done
-mv $directorio/*_Tree.root $directorio/Resultados
-for arbol in $directorio/Resultados*.root
-do
-    echo "Archivo: $arbol"
-    if ! rootls "$arbol" | grep -q "myTree"; then
-        # Si no se encuentra "drs4data" en el archivo, ejecutar una acción
-        echo "El arbol $arbol no contiene 'myTree'."
-        # Agrega aquí la acción que deseas realizar
-    else
-        # Ejecuta el script en C para combinar los árboles
-        root -l -q -b 'CombineTrees.C("'$arbol'")'
-    fi
-done
+
 
 #-------------------------------
 mv $directorio/*_Tree.root $directorio/Resultados

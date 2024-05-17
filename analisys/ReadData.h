@@ -8,10 +8,13 @@
 #ifndef ReadData_h
 #define ReadData_h
 
+
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
 #include <string>
+#include <vector>
+#include <dirent.h>
 
 
 // Header file for the classes stored in the TTree if any.
@@ -23,7 +26,7 @@ public :
 
   TTree *myTree;
   TFile *outputFile;
-
+ //void SetDirectory(const char* dir) { directory = dir; }
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
@@ -53,32 +56,45 @@ public :
    TBranch        *b_v1;   	//!
    TBranch        *b_v2;   	//!
 
-    ReadData(const char* filename, TTree *tree=0);		//ReadData(TTree *tree=0);
+  //  ReadData(const char* filename, TTree *tree=0);		//ReadData(TTree *tree=0);
+  ReadData(const char* dir, TTree *tree=0);
+
    virtual ~ReadData();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
-   virtual void     Init(const char* filename, TTree *tree); 	//modificar parámetros de entrada INIT
+   virtual void     Init(TTree *tree); 	//modificar parámetros de entrada INIT
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
+
+std::vector<std::string> GetFileList(const char *directory);
 };
 
 #endif
 
 #ifdef ReadData_cxx
 
-ReadData::ReadData(const char* filename, TTree *tree) : fChain(0) 
+//ReadData::ReadData(const char* filename, TTree *tree) : fChain(0) 
+ReadData::ReadData(const char* dir, TTree *tree) : fChain(0) 
 {
     // Conecta el archivo especificado y lee el TTree "drs4data"
-    TFile *f = TFile::Open(filename);
+   /* Enviar Este Trozo al Loop
+
+TFile *f = TFile::Open(filename);
     if (!f || !f->IsOpen()) {
         std::cerr << "Error: No se pudo abrir el archivo: " << filename << std::endl;
         return;
     }
-    f->GetObject("drs4data",tree);
+    f->GetObject("drs4data",tree);*/
+  std::vector<std::string> fileList = GetFileList(dir);
+  //std::vector<std::string> fileList = GetFileList(dir);  
 
-    Init(filename, tree);
+
+//std::vector<std::string> fileList = GetFileList(directory.c_str());
+
+
+    Init(tree);
 }
 
 
@@ -108,7 +124,7 @@ Long64_t ReadData::LoadTree(Long64_t entry)
    return centry;
 }
 
-void ReadData::Init(const char* filename, TTree *tree)
+void ReadData::Init(TTree *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
@@ -132,8 +148,10 @@ void ReadData::Init(const char* filename, TTree *tree)
    fChain->SetBranchAddress("v2", &v2, &b_v2);
    
    //   outputFile = new TFile("PW0.root","RECREATE"); 
-   
-   
+   /*-------------------------------------------------------------
+   ------------ Ya no creamos un archivo de salida segun archivo de entrada -------------
+
+
    std::string outputFileName = filename;  			// Copia el nombre de archivo de entrada
    std::size_t found = outputFileName.find_last_of("/\\."); 	// Busca la última ocurrencia de '/' o '\' para encontrar la extensión
    if (found != std::string::npos) { 				// Si se encontró la extensión
@@ -142,12 +160,12 @@ void ReadData::Init(const char* filename, TTree *tree)
        outputFileName += "_Tree.root"; 				// Agrega "_Tree" al final del nombre de archivo
      }
 
-
+*/
   
     // Crear Archivo de Salida
-    outputFile = new TFile(outputFileName.c_str(), "RECREATE");
+  //  outputFile = new TFile(outputFileName.c_str(), "RECREATE");
 
-    //outputFile = new TFile(outputFileName,"RECREATE"); 
+   outputFile = new TFile("global_Tree.root","UPDATE"); 
    
    myTree = new TTree("myTree", "Conversión de Tupla a Tree");
    

@@ -29,6 +29,48 @@ void ReadData::Loop()
 // METHOD2: replace line
 //    fChain->GetEntry(jentry);       //read all branches
 //by  b_branchname->GetEntry(ientry); //read only this branch
+
+/*--------Introducir variable filename--------*
+----------------------------------------------*/
+
+{
+ 
+ std::string filename;
+
+    // Obteniendo la lista de archivos .root en el directorio proporcionado
+   std::vector<std::string> fileList = GetFileList(directory.c_str());
+
+  //std::vector<std::string> fileList = GetFileList(dir);
+    // Iterando sobre la lista de archivos y procesándolos uno por uno
+    for (const auto& file : fileList) {
+        // Construyendo el nombre de archivo completo
+        filename = directory + "/" + file;
+
+        // Intenta abrir el archivo .root
+        TFile *f = TFile::Open(filename.c_str());
+        if (!f || !f->IsOpen()) {
+            std::cerr << "Error: No se pudo abrir el archivo: " << filename << std::endl;
+            continue; // Continuar con el próximo archivo
+        }
+        f->GetObject("drs4data", tree);
+
+        // Tu código para procesar el archivo aquí ...
+
+        f->Close(); // Cerrar el archivo
+    }
+
+
+TFile *f = TFile::Open(filename);
+    if (!f || !f->IsOpen()) {
+        std::cerr << "Error: No se pudo abrir el archivo: " << filename << std::endl;
+        return;
+    }
+    f->GetObject("drs4data",tree);
+
+    
+
+
+
    if (fChain == 0) return;
 
    Long64_t nentries = fChain->GetEntriesFast()/kNsample;
@@ -116,7 +158,27 @@ void ReadData::Loop()
     outputFile->Close();
    }
       
-   
+   std::vector<std::string> ReadData::GetFileList(const char *directory) {
+    std::vector<std::string> fileList;
+    DIR *dir;
+    struct dirent *ent;
+
+    // Abre el directorio
+    if ((dir = opendir(directory)) != NULL) {
+        // Itera sobre cada archivo en el directorio
+        while ((ent = readdir(dir)) != NULL) {
+            // Verifica si el archivo es un archivo .root
+            std::string filename = ent->d_name;
+            if (filename.find(".root") != std::string::npos) {
+                fileList.push_back(filename);
+            }
+        }
+        closedir(dir);
+    } else {
+        std::cerr << "Error: No se pudo abrir el directorio: " << directory << std::endl;
+    }
+    return fileList;
+}
   // Codigo
    
       // if (Cut(ientry) < 0) continue;

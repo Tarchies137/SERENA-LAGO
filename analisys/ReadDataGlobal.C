@@ -1,4 +1,4 @@
- #define ReadDataGlobal_cxx
+#define ReadDataGlobal_cxx
 #include "ReadDataGlobal.h"
 #include <TH2.h>
 #include <TStyle.h>

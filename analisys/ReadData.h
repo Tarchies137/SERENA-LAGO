@@ -12,7 +12,8 @@
 #include <TChain.h>
 #include <TFile.h>
 #include <string>
-
+#include <vector> // Agregar la inclusión de la biblioteca de vector
+#include <TSystem.h> // Agregar la inclusión de la biblioteca TSystem
 
 // Header file for the classes stored in the TTree if any.
 
@@ -23,7 +24,7 @@ public :
 
   TTree *myTree;
   TFile *outputFile;
-
+  
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
@@ -41,8 +42,9 @@ public :
    Float_t eVals[9], Q[3], V_Min[3], T_Min[3];	//Branches eVals junta todos los valores, modif myTree->Brance("evals ... *160
    Int_t ev;
    
-  std::string filename  ;
- 
+  //std::string filename  ;
+ std::string directory; // Agregar esta variable miembro para almacenar el directorio
+
 
 
    // List of branches
@@ -53,7 +55,9 @@ public :
    TBranch        *b_v1;   	//!
    TBranch        *b_v2;   	//!
 
-    ReadData(const char* filename, TTree *tree=0);		//ReadData(TTree *tree=0);
+//*****    ReadData(const char* filename, TTree *tree=0);		//ReadData(TTree *tree=0);
+     ReadData(const char* dir, TTree *tree=0); // Se Modifica la declaración del constructor
+
    virtual ~ReadData();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -62,6 +66,9 @@ public :
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
+
+private:
+    std::vector<std::string> GetFileList(const char* directory); // Agregar la declaración de la función GetFileList
 };
 
 #endif

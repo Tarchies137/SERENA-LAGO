@@ -1,8 +1,11 @@
- #define ReadData_cxx
+#define ReadData_cxx
 #include "ReadData.h"
 #include <TH2.h>
+#include <dirent.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <TSystem.h> // Agregar la inclusión de la biblioteca TSystem
+
 
 void ReadData::Loop()
 {

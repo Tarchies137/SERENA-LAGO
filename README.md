@@ -27,9 +27,15 @@ Objetivos de la Semana:
     (*)Trabajar a partir de un directorio
 	(*)Crear Directorio de Analisis de datos
 	(*)Revisar ReadData.C y ReadData.h y verificar que funciona usando ruta de archivos
-        (*)Macrodata crea un directorio de resultados donde se generan los _Tree.root individuales y 
+        (*)Macrodata crea un directorio de resultados donde se generan los _Tree.root individuales 
         (->)un arbol con data completa
-		( )Crear "arbol".C que concatena los arboles dados 
+		(*) Crear "arbol".C que concatena los arboles dados
+		( ) Incluir en la tupla el nombre del archivo de origen.
+		( ) Combinar la rama FOREST con main
+		( ) Deshechar la rama FOREST-2
+	() Crear manual de ususriao del script
+	 
+
 ( ) CAlaculo del tiempo de llegada al PMT
     ( ) Crear un histograma de tiempos
     ( ) Encontrar la diferenciua de tiempos entre ambos picks del histograma tiempos del minimo en el ultimo dinodo
@@ -40,3 +46,10 @@ Objetivos de la Semana:
 10/05/2024 
 Se crea nueva rama de git $git checkout FOREST  para trabajar union de árboles 
 Continuamos trabajando data
+
+20/05/2024
+Se logra unir las tuplas en un solo árbol. Resultado se encuentra en branch FOREST DIR analysis-FOREST. 
+Se plantean las siguientes tareas de depuración.
+	()CAmbiar nombre a los archivos ReadData.C y ReadData.h para diferenciar del archivo que está en main
+	() Unificar las branch para continuar el trabajo de análisis de Datos
+

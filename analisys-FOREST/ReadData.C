@@ -55,6 +55,8 @@ for(const auto& filename : filenameList) {
         continue; // Saltar al siguiente archivo
     }
 
+char cPW = filename[filename.length()-13];
+    int nPW = cPW - '0';
 
    if (fChain == 0) return;
 

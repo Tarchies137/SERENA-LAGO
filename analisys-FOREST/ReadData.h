@@ -14,6 +14,7 @@
 #include <string>
 #include <vector> // Agregar la inclusión de la biblioteca de vector
 #include <TSystem.h> // Agregar la inclusión de la biblioteca TSystem
+#include <cstdlib> // Para usar atoi
 
 // Header file for the classes stored in the TTree if any.
 
@@ -139,13 +140,17 @@ const char* entry;
     //std::string filename(entry);
 
     std::string filename(dirPath); // Comienza con el directorio
-        filename += entry;             // Agrega el nombre del archivo al final del directorio
-        
+        filename = filename + "/" + entry;             // Agrega el nombre del archivo al final del directorio
+       // std::cout<<"filename="<<filename<<std::endl;
     
     // Check if the file has a .root extension
     if (filename.length() >= 5 && filename.substr(filename.length() - 5) == ".root") {
-    std::cout << entry << std::endl;
-    std::cout << filename << std::endl;
+   /* char cPW = filename[filename.length()-13];
+    int nPW = cPW - '0';
+    //int nPW = atoi(cPW);
+*/    std::cout << entry << std::endl;
+	std::cout << nPW << std::endl;
+std::cout << filename << std::endl;
         filenameList.push_back(filename); // Aadimos el nombre del archivo al vector
     }
 }

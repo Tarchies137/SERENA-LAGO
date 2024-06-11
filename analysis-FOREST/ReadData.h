@@ -189,17 +189,6 @@ void ReadData::Init(TTree *tree)
    fChain->SetBranchAddress("v1", &v1, &b_v1);
    fChain->SetBranchAddress("v2", &v2, &b_v2);
    
-   //   outputFile = new TFile("PW0.root","RECREATE"); 
-   /*
-   
-   std::string outputFileName = filename;  			// Copia el nombre de archivo de entrada
-   std::size_t found = outputFileName.find_last_of("/\\."); 	// Busca la última ocurrencia de '/' o '\' para encontrar la extensión
-   if (found != std::string::npos) { 				// Si se encontró la extensión
-       outputFileName.insert(found, "_Tree"); 			// Inserta "_Tree" justo antes de la extensión
-     } else { 							// Si no se encontró la extensión
-       outputFileName += "_Tree.root"; 				// Agrega "_Tree" al final del nombre de archivo
-     }*/
-
 
   
     // Crear Archivo de Salida

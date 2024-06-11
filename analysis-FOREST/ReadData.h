@@ -12,9 +12,9 @@
 #include <TChain.h>
 #include <TFile.h>
 #include <string>
-#include <vector> // Agregar la inclusión de la biblioteca de vector
-#include <TSystem.h> // Agregar la inclusión de la biblioteca TSystem
-#include <cstdlib> // Para usar atoi
+#include <vector> 	// Agregar la inclusión de la biblioteca de vector
+#include <TSystem.h> 	// Agregar la inclusión de la biblioteca TSystem
+#include <cstdlib> 	// Para usar atoi
 
 // Header file for the classes stored in the TTree if any.
 
@@ -29,9 +29,9 @@ public :
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
-   // Declaration of leaf types
+// Declaration of leaf types
    
-  static const Int_t kNsample=1024;	// Número de Saples del drs4
+  static const Int_t kNsample=1024;	// Número de Samples del drs4
    Float_t   	R=50; 			//Resistencia 50 [Ohm] de la impedancia.
    Float_t   	evn;
    Float_t   	evn_time;
@@ -41,7 +41,8 @@ public :
    Float_t   	v2;
    Float_t tt[kNsample], vv0[kNsample], vv1[kNsample], vv2[kNsample]; //Branches
    Float_t eVals[9], Q[3], V_Min[3], T_Min[3];	//Branches eVals junta todos los valores, modif myTree->Brance("evals ... *160
-   Int_t ev;
+   Int_t ev, ePw, nPw;
+   
    
   //std::string filename  ;
  std::string directory; // Agregar esta variable miembro para almacenar el directorio
@@ -57,7 +58,7 @@ public :
    TBranch        *b_v2;   	//!
 
 //*****    ReadData(const char* filename, TTree *tree=0);		//ReadData(TTree *tree=0);
-     ReadData(const char* dir, TTree *tree=0); // Se Modifica la declaración del constructor
+   ReadData(const char* dir, TTree *tree=0); // Se Modifica la declaración del constructor
 
    virtual ~ReadData();
    virtual Int_t    Cut(Long64_t entry);
@@ -140,7 +141,7 @@ const char* entry;
     //std::string filename(entry);
 
     std::string filename(dirPath); // Comienza con el directorio
-        filename = filename + "/" + entry;             // Agrega el nombre del archivo al final del directorio
+        filename = filename + entry;             // Agrega el nombre del archivo al final del directorio
        // std::cout<<"filename="<<filename<<std::endl;
     
     // Check if the file has a .root extension
@@ -149,7 +150,7 @@ const char* entry;
     int nPW = cPW - '0';
     //int nPW = atoi(cPW);
 */    std::cout << entry << std::endl;
-	std::cout << nPW << std::endl;
+	std::cout << nPw << std::endl;
 std::cout << filename << std::endl;
         filenameList.push_back(filename); // Aadimos el nombre del archivo al vector
     }
@@ -210,12 +211,15 @@ std::cout << "Despues de crear global_Tree.root" << std::endl;
    myTree = new TTree("myTree", "Conversión de Tupla a Tree");
    
    
-    myTree->Branch("ev", &ev, "ev/I");
-    myTree->Branch("tt", tt, TString("tt[")+kNsample+"]/F");
-    myTree->Branch("vv0", vv0,TString("vv0[")+kNsample+"]/F");
-    myTree->Branch("vv1", vv1,TString("vv1[")+kNsample+"]/F");
-    myTree->Branch("vv2", vv2,TString("vv2[")+kNsample+"]/F");
-    myTree->Branch("eVals", eVals,"eVals[9]/F");
+
+    myTree->Branch("nPw", &nPw, "nPw/I: Indicacor de Data origen");
+    myTree->Branch("ev", &ev, "ev/I:numero de Evento dentro de nPw");
+    myTree->Branch("ePw", &ePw, "ePw/I: numero de evento macro");
+    myTree->Branch("tt", tt, TString("tt[")+kNsample+"]/F: variable temporal");
+    myTree->Branch("vv0", vv0,TString("vv0[")+kNsample+"]/F: Señal MPPC");
+    myTree->Branch("vv1", vv1,TString("vv1[")+kNsample+"]/F: Señal Anodo");
+    myTree->Branch("vv2", vv2,TString("vv2[")+kNsample+"]/F: Señal último dinodo");
+    myTree->Branch("eVals", eVals,"eVals[9]/F:Calculos Q[3], min(V[3]) min(T[3])");
    Notify();
 }
 

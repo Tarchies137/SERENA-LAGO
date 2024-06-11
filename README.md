@@ -17,6 +17,7 @@ Este repositorio no comparte los archivos .root debido a su tamaño
 --------------------------------------------------------------
 
 29/04/24
+10/06/2024
  Se estabelecen los objetivos semanales
 Objetivos de la Semana:
 
@@ -30,10 +31,11 @@ Objetivos de la Semana:
         (*)Macrodata crea un directorio de resultados donde se generan los _Tree.root individuales 
         (->)un arbol con data completa
 		(*) Crear "arbol".C que concatena los arboles dados
-		( ) Incluir en la tupla el nombre del archivo de origen.
+			[FOREST.Name]
+		(->) Incluir en la tupla el nombre del archivo de origen.
 		( ) Combinar la rama FOREST con main
-		( ) Deshechar la rama FOREST-2
-	() Crear manual de ususriao del script
+		(->) Deshechar la rama FOREST-2, FOREST-ULS
+	(->) Crear manual de usuario del script
 	 
 
 ( ) CAlaculo del tiempo de llegada al PMT

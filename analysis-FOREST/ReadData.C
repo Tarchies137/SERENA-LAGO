@@ -9,33 +9,12 @@
 
 void ReadData::Loop()
 {
-//   In a ROOT session, you can do:
-//      root> .L ReadData.C
-//      root> ReadData t
-//      root> t.GetEntry(12); // Fill t data members with entry number 12
-//      root> t.Show();       // Show values of entry 12
-//      root> t.Show(16);     // Read and show values of entry 16
-//      root> t.Loop();       // Loop on all entries
-//
-
-//     This is the loop skeleton where:
-//    jentry is the global entry number in the chain
-//    ientry is the entry number in the current Tree
-//  Note that the argument to GetEntry must be:
-//    jentry for TChain::GetEntry
-//    ientry for TTree::GetEntry and TBranch::GetEntry
-//
-//       To read only selected branches, Insert statements like:
-// METHOD1:
-//    fChain->SetBranchStatus("*",0);  // disable all branches
-//    fChain->SetBranchStatus("branchname",1);  // activate branchname
-// METHOD2: replace line
-//    fChain->GetEntry(jentry);       //read all branches
-//by  b_branchname->GetEntry(ientry); //read only this branch
-
+//  
 
 	//TTree *tree;
 	 //outputFile = new TFile("global_Tree.root", "UPDATE");
+	 
+	 int EV=0 ; // Definición evento marco global
 for(const auto& filename : filenameList) {
 
  std::cout << "Leyendo el archivo: " << filename << std::endl;
@@ -55,8 +34,9 @@ for(const auto& filename : filenameList) {
         continue; // Saltar al siguiente archivo
     }
 
-char cPW = filename[filename.length()-13];
-    int nPW = cPW - '0';
+char cPw = filename[filename.length()-13];
+    nPw = cPw - '0'; // número de data
+   // std::cout <<"nPw vale:"<< nPw << typeid(nPw).name() << std::endl;
 
    if (fChain == 0) return;
 
@@ -70,6 +50,7 @@ char cPW = filename[filename.length()-13];
       	if (ientry < 0) break;
      	// número de evento
       	ev = jentry;
+      	ePw = EV + ev; //Identificador evento global
       	//
       	Float_t sR0=0,sR1=0,sR2=0;
 	Float_t t0_min,v0_min=1000,t1_min,v1_min=1000,t2_min,v2_min=1000;
@@ -102,6 +83,7 @@ char cPW = filename[filename.length()-13];
 		}
 		
 		}
+		
 		//carga total clectada
 	Float_t dt = (tt[kNsample-1]-tt[0])/(kNsample - 1);
 	/*Q[0] = (Float_t)sR0*dt/R;
@@ -138,7 +120,7 @@ char cPW = filename[filename.length()-13];
     }
     
 std::cout << "Escribiendo los datos de: " << filename << std::endl;
-
+	EV = ePw + 1; //evento global suma 1 para correlación correcta
 }
     // Guardar la cabecera del árbol
    outputFile->cd(); // Establecer el directorio actual como el archivo de salida

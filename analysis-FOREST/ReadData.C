@@ -53,7 +53,9 @@ char cPw = filename[filename.length()-13];
       	ePw = EV + ev; //Identificador evento global
       	//
       	Float_t sR0=0,sR1=0,sR2=0;
-	Float_t t0_min,v0_min=1000,t1_min,v1_min=1000,t2_min,v2_min=1000;
+		Float_t dt = (tt[kNsample-1]-tt[0])/(kNsample - 1);
+
+		Float_t t0_min,v0_min=1000,t1_min,v1_min=1000,t2_min,v2_min=1000;
 
       	for (Int_t j = 0; j < kNsample; j++) {
         	nb = fChain->GetEntry(j + jentry*kNsample);   nbytes += nb;   
@@ -65,7 +67,7 @@ char cPw = filename[filename.length()-13];
             	sR0 += v0;// equivale a sR = sR+vv[k];
             	sR1 += v1;
             	sR2 += v2;
-            	//Minimo ...  Incluir como nueva rama
+            	//Minimo ... [] Incluir como nueva rama
 		if (v0<v0_min)
 		{
 			v0_min = v0;
@@ -82,12 +84,18 @@ char cPw = filename[filename.length()-13];
 			t2_min = t;
 		}
 		//___________CARga CUT_____________
+		if (t<180e-9) // [] Trabajar ventana temporal
+		{
+			QC0 = sR0*dt/R;
+			QC1 = sR1*dt/R;
+			QC2 = sR2*dt/R;
+		}
 
 
 		}
 		
 		//carga total colectada
-	Float_t dt = (tt[kNsample-1]-tt[0])/(kNsample - 1);
+	
 
 
 	Q[0] = sR0*dt/R;

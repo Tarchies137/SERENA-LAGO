@@ -2,7 +2,9 @@ Análisis de DAtos
 Convierte las tuplas de los datos en estructura de árbol que contienen  los 10000 datos.
 
 ()Adjuntar modo de uso
-
+---------------------------------------------
+	BRANCH QCUT
+Incluir branch con carga integrada hasta antes e 190e-9
 
 ----------------------------------------------
 10/06/2024

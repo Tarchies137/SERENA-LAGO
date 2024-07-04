@@ -81,14 +81,14 @@ char cPw = filename[filename.length()-13];
 			v2_min = v2;
 			t2_min = t;
 		}
-		
+		//___________CARga CUT_____________
+
+
 		}
 		
-		//carga total clectada
+		//carga total colectada
 	Float_t dt = (tt[kNsample-1]-tt[0])/(kNsample - 1);
-	/*Q[0] = (Float_t)sR0*dt/R;
-	Q[1] = (Float_t)sR1*dt/R;
-	Q[2] = (Float_t)sR2*dt/R;*/
+
 
 	Q[0] = sR0*dt/R;
 	Q[1] = sR1*dt/R;

@@ -33,6 +33,8 @@ public :
    
   static const Int_t kNsample=1024;	// Número de Samples del drs4
    Float_t   	R=50; 			//Resistencia 50 [Ohm] de la impedancia.
+
+
    Float_t   	evn;
    Float_t   	evn_time;
    Float_t   	t;
@@ -42,6 +44,7 @@ public :
    Float_t tt[kNsample], vv0[kNsample], vv1[kNsample], vv2[kNsample]; //Branches
    Float_t eVals[9], Q[3], V_Min[3], T_Min[3];	//Branches eVals junta todos los valores, modif myTree->Brance("evals ... *160
    Int_t ev, ePw, nPw;
+   Float_t QC0 QC1 QC2; //Cargas integradas corregidas 190e-9
    
    
   //std::string filename  ;
@@ -209,6 +212,11 @@ std::cout << "Despues de crear global_Tree.root" << std::endl;
     myTree->Branch("vv1", vv1,TString("vv1[")+kNsample+"]/F: Señal Anodo");
     myTree->Branch("vv2", vv2,TString("vv2[")+kNsample+"]/F: Señal último dinodo");
     myTree->Branch("eVals", eVals,"eVals[9]/F:Calculos Q[3], min(V[3]) min(T[3])");
+    //----------CArga  con corte temporal 
+    myTree->Branch("QC0",&QC0, "QC0/F Carga con corte Señal MPPC ");
+    myTree->Branch("QC1",&QC1, "QC1/F Carga con corte Señal MPPC ");
+    myTree->Branch("QC2",&QC2, "QC2/F Carga con corte Señal MPPC ");
+
    Notify();
 }
 

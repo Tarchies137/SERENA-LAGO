@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Fri May  3 16:56:44 2024 by ROOT version 6.26/06
-// from TTree myTree/Conversión de Tupla a Tree
-// found on file: PW0_LAGOmu_Tree.root
+// Thu Apr 25 12:08:11 2024 by ROOT version 6.18/04
+// from TTree drs4data/drs4 data
+// found on file: PW3_LAGOmu.root
 //////////////////////////////////////////////////////////
 
-#ifndef Datatotal_h
-#define Datatotal_h
+#ifndef drs4data_h
+#define drs4data_h
 
 #include <TROOT.h>
 #include <TChain.h>
@@ -14,7 +14,7 @@
 
 // Header file for the classes stored in the TTree if any.
 
-class Datatotal {
+class drs4data {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
@@ -22,23 +22,23 @@ public :
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // Declaration of leaf types
-   Int_t           ev;
-   Float_t         tt[1024];
-   Float_t         vv0[1024];
-   Float_t         vv1[1024];
-   Float_t         vv2[1024];
-   Float_t         eVals[9];
+   Float_t         evn;
+   Float_t         evn_time;
+   Float_t         t;
+   Float_t         v0;
+   Float_t         v1;
+   Float_t         v2;
 
    // List of branches
-   TBranch        *b_ev;   //!
-   TBranch        *b_tt;   //!
-   TBranch        *b_vv0;   //!
-   TBranch        *b_vv1;   //!
-   TBranch        *b_vv2;   //!
-   TBranch        *b_eVals;   //!
+   TBranch        *b_evn;   //!
+   TBranch        *b_evn_time;   //!
+   TBranch        *b_t;   //!
+   TBranch        *b_v0;   //!
+   TBranch        *b_v1;   //!
+   TBranch        *b_v2;   //!
 
-   Datatotal(TTree *tree=0);
-   virtual ~Datatotal();
+   drs4data(TTree *tree=0);
+   virtual ~drs4data();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
@@ -50,35 +50,35 @@ public :
 
 #endif
 
-#ifdef Datatotal_cxx
-Datatotal::Datatotal(TTree *tree) : fChain(0) 
+#ifdef drs4data_cxx
+drs4data::drs4data(TTree *tree) : fChain(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("PW0_LAGOmu_Tree.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("PW3_LAGOmu.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("PW0_LAGOmu_Tree.root");
+         f = new TFile("PW3_LAGOmu.root");
       }
-      f->GetObject("myTree",tree);
+      f->GetObject("drs4data",tree);
 
    }
    Init(tree);
 }
 
-Datatotal::~Datatotal()
+drs4data::~drs4data()
 {
    if (!fChain) return;
    delete fChain->GetCurrentFile();
 }
 
-Int_t Datatotal::GetEntry(Long64_t entry)
+Int_t drs4data::GetEntry(Long64_t entry)
 {
 // Read contents of entry.
    if (!fChain) return 0;
    return fChain->GetEntry(entry);
 }
-Long64_t Datatotal::LoadTree(Long64_t entry)
+Long64_t drs4data::LoadTree(Long64_t entry)
 {
 // Set the environment to read one entry
    if (!fChain) return -5;
@@ -91,7 +91,7 @@ Long64_t Datatotal::LoadTree(Long64_t entry)
    return centry;
 }
 
-void Datatotal::Init(TTree *tree)
+void drs4data::Init(TTree *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
@@ -107,16 +107,16 @@ void Datatotal::Init(TTree *tree)
    fCurrent = -1;
    fChain->SetMakeClass(1);
 
-   fChain->SetBranchAddress("ev", &ev, &b_ev);
-   fChain->SetBranchAddress("tt", tt, &b_tt);
-   fChain->SetBranchAddress("vv0", vv0, &b_vv0);
-   fChain->SetBranchAddress("vv1", vv1, &b_vv1);
-   fChain->SetBranchAddress("vv2", vv2, &b_vv2);
-   fChain->SetBranchAddress("eVals", eVals, &b_eVals);
+   fChain->SetBranchAddress("evn", &evn, &b_evn);
+   fChain->SetBranchAddress("evn_time", &evn_time, &b_evn_time);
+   fChain->SetBranchAddress("t", &t, &b_t);
+   fChain->SetBranchAddress("v0", &v0, &b_v0);
+   fChain->SetBranchAddress("v1", &v1, &b_v1);
+   fChain->SetBranchAddress("v2", &v2, &b_v2);
    Notify();
 }
 
-Bool_t Datatotal::Notify()
+Bool_t drs4data::Notify()
 {
    // The Notify() function is called when a new file is opened. This
    // can be either for a new TTree in a TChain or when when a new TTree
@@ -127,18 +127,18 @@ Bool_t Datatotal::Notify()
    return kTRUE;
 }
 
-void Datatotal::Show(Long64_t entry)
+void drs4data::Show(Long64_t entry)
 {
 // Print contents of entry.
 // If entry is not specified, print current entry
    if (!fChain) return;
    fChain->Show(entry);
 }
-Int_t Datatotal::Cut(Long64_t entry)
+Int_t drs4data::Cut(Long64_t entry)
 {
 // This function may be called from Loop.
 // returns  1 if entry is accepted.
 // returns -1 otherwise.
    return 1;
 }
-#endif // #ifdef Datatotal_cxx
+#endif // #ifdef drs4data_cxx

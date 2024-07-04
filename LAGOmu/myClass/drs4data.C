@@ -1,14 +1,14 @@
-#define CombineTree_cxx
-#include "CombineTree.h"
+#define drs4data_cxx
+#include "drs4data.h"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
 
-void CombineTree::Loop()
+void drs4data::Loop()
 {
 //   In a ROOT session, you can do:
-//      root> .L CombineTree.C
-//      root> CombineTree t
+//      root> .L drs4data.C
+//      root> drs4data t
 //      root> t.GetEntry(12); // Fill t data members with entry number 12
 //      root> t.Show();       // Show values of entry 12
 //      root> t.Show(16);     // Read and show values of entry 16
@@ -38,12 +38,6 @@ void CombineTree::Loop()
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
-      
-      
-      
-      
-      
-      
       // if (Cut(ientry) < 0) continue;
    }
 }

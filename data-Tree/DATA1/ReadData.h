@@ -44,7 +44,7 @@ public :
    Float_t tt[kNsample], vv0[kNsample], vv1[kNsample], vv2[kNsample]; //Branches
    Float_t eVals[9], Q[3], V_Min[3], T_Min[3];	//Branches eVals junta todos los valores, modif myTree->Brance("evals ... *160
    Int_t ev, ePw, nPw;
-   Float_t QC0 QC1 QC2; //Cargas integradas corregidas 190e-9
+   Float_t      QC0, QC1,    QC2; //Cargas integradas corregidas 190e-9
    
    
   //std::string filename  ;
@@ -213,9 +213,9 @@ std::cout << "Despues de crear global_Tree.root" << std::endl;
     myTree->Branch("vv2", vv2,TString("vv2[")+kNsample+"]/F: Señal último dinodo");
     myTree->Branch("eVals", eVals,"eVals[9]/F:Calculos Q[3], min(V[3]) min(T[3])");
     //----------CArga  con corte temporal 
-    myTree->Branch("QC0",QC0, "QC0/F Carga con corte Señal MPPC ");
-    myTree->Branch("QC1",QC1, "QC1/F Carga con corte Señal MPPC ");
-    myTree->Branch("QC2",QC2, "QC2/F Carga con corte Señal MPPC ");
+    myTree->Branch("QC0",&QC0, "QC0/F Carga con corte Señal MPPC ");
+    myTree->Branch("QC1",&QC1, "QC1/F Carga con corte Señal MPPC ");
+    myTree->Branch("QC2",&QC2, "QC2/F Carga con corte Señal MPPC ");
 
    Notify();
 }
